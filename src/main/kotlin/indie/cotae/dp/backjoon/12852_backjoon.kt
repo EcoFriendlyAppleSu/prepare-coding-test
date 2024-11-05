@@ -1,32 +1,36 @@
 package indie.cotae.dp.backjoon
 
-/**
- * 다시 도전 필요
- */
 fun main() {
-    val N = readln().toInt()
-    val mem = IntArray(N + 1) { 0 } // 연산 횟수 메모이제이션
-    val path = Array(N + 1) { "" }   // 최단 경로
-    path[1] = "1"
+    val n = readln().toInt()
+    val visited = IntArray(n + 1)
+    val dp = MutableList(n + 1) { 0 }
 
-    for (idx in 2..N) {
-        mem[idx] = mem[idx - 1] + 1
-        var prev = idx - 1
+    dp[1] = 0
+    visited[1] = 1
 
-        if (idx % 3 == 0 && mem[idx / 3] + 1 < mem[idx]) {
-            mem[idx] = mem[idx / 3] + 1
-            prev = idx / 3
+    for (i in 2..n) {
+        dp[i] = dp[i-1] + 1
+        visited[i] = i - 1
+
+        if (i % 2 == 0 && dp[i / 2] + 1 < dp[i]) {
+            dp[i] = dp[i / 2] + 1
+            visited[i] = i / 2
         }
 
-        if (idx % 2 == 0 && mem[idx / 2] + 1 < mem[idx]) {
-            mem[idx] = mem[idx / 2] + 1
-            prev = idx / 2
+        if (i % 3 == 0 && dp[i / 3] + 1 < dp[i]) {
+            dp[i] = dp[i / 3] + 1
+            visited[i] = i / 3
         }
-
-        path[idx] = "$idx ${path[prev]}"
     }
 
-    println(mem[N])
-    println(path[N])
-    println(path.joinToString("\n"))
+    println(dp[n])
+    if (n != 0) {
+        print("$n ")
+    }
+
+    var time = n
+    while (time != 1) {
+        print("${visited[time]} ")
+        time = visited[time]
+    }
 }
