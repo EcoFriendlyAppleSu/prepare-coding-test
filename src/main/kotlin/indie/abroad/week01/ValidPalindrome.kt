@@ -15,7 +15,7 @@ fun main() {
 
 fun isPalindrome(s: String): Boolean {
     val splitGivenString = s.toCharArray()
-        .filter { it.isLetter() || it.isDigit() }
+        .filter { it.isLetterOrDigit() }
         .map { it.lowercaseChar() }
         .toCharArray()
 

@@ -25,3 +25,28 @@ fun topKFrequent(nums: IntArray, k: Int): IntArray {
     val sortedMap = map.toList().sortedByDescending { it.second }.toMap()
     return sortedMap.entries.take(k).map { it.key }.toIntArray()
 }
+
+fun topKFrequent01(nums: IntArray, k: Int): IntArray {
+    val map = mutableMapOf<Int, Int>()
+    for(num in nums) {
+        map[num] = map.getOrDefault(num, 0) + 1
+    }
+
+    // count List 초기화
+    // map의 value는 nums Size를 넘을 수 없음.
+    val countList = Array(nums.size + 1) { mutableListOf<Int>() }
+    for ((key, value) in map) {
+        countList[value].add(key)
+    }
+
+    val result = mutableListOf<Int>()
+    for (i in countList.size - 1 downTo 0) {
+        for (num in countList[i]) {
+            result.add(num)
+            if (result.size == k) {
+                return result.toIntArray()
+            }
+        }
+    }
+    return result.toIntArray()
+}
