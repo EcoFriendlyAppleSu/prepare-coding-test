@@ -158,4 +158,6 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+src/main/kotlin/indie/TestEditor.kt
+
 # End of https://www.toptal.com/developers/gitignore/api/git,gradle,intellij+all,kotlin
