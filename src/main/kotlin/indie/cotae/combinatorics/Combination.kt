@@ -1,5 +1,8 @@
 package indie.cotae.combinatorics
 
+/**
+ * index + arySize - wantedPosition ->
+ */
 fun main() {
     val nums = listOf(1,2,3,4)
     val k = 2
