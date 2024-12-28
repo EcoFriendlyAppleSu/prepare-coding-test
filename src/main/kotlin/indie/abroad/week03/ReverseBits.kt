@@ -43,7 +43,7 @@ fun numToBinaryString(n: Long): String {
     return result.reversed()
 }
 
-
+// Bit 연산으로 숫자를 뒤집는 방법
 fun reverseBits(n: Int): Int {
     var input = n
     var result = 0
@@ -57,3 +57,14 @@ fun reverseBits(n: Int): Int {
 
     return result
 }
+
+/*
+
+당신의 코드에서 잘못된 부분
+
+	1.	비트 조작 대신 문자열 기반으로 처리:
+	•	문자열을 이용해 2진수 변환 및 계산을 수행하면 비효율적이고, 부호 없는 정수를 처리하지 못할 가능성이 큽니다.
+	2.	올바르지 않은 비트 연산 로직:
+	•	비트 값을 뒤집는 과정에서 문자열의 각 비트를 읽고 계산하지만, 이를 비트 연산으로 바로 처리할 수 있습니다.
+	3.	2의 거듭제곱 사용:
+	•	2.0.pow(i).toInt()는 불필요하며, 비트를 직접 이동하는 방식이 훨씬 효율적입니다.*/
