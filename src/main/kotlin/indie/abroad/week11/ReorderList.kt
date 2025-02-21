@@ -34,3 +34,19 @@ fun reorderList(head: ListNode?): Unit {
 class ListNode(var `val`: Int) {
     var next: ListNode? = null
 }
+
+/*
+* 리스트를 뒤집는 방법.
+* 리스트를 뒤집을 때, 이전의 Node를 두고 각 노드를 탐색해가며 추가하는 방식으로 진행
+* */
+fun reverseList(head: ListNode?): ListNode? {
+    var prev: ListNode? = null
+    var curr = head
+    while (curr != null) {
+        val nextTemp = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nextTemp
+    }
+    return prev  // 새로운 head가 된 prev 반환
+}
