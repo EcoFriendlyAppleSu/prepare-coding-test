@@ -14,46 +14,28 @@ fun main() {
 }
 
 fun solution(progresses: IntArray, speeds: IntArray): IntArray {
-    // ArrayDeque는 내부에서 배열을 사용하지만 설계 자체가 삽입, 삭제, 탐색 등에 최적화 되어 있기 때문에 index를 통해 접근하는 방법은 제공하지 않습니다.
-    val queue = mutableListOf<Pair<Int, Int>>()
-    val result = mutableListOf<Int>()
-    var nextIdx = 0
+    var answer = mutableListOf<Int>()
 
-    for (i in progresses.indices) {
-        val pair = Pair(progresses[i], speeds[i])
-        queue.add(pair)
-    }
+    val progressQueue = progresses.toMutableList()
+    val speedsQueue = speeds.toMutableList()
 
-    // 작업이 없어질 때까지 반복합니다.
-    while (nextIdx != queue.size) {
-        var tempAnswer = 0
-
-
-        for (i in 0 until queue.size) {
-            var (progress, speed) = queue[i]
-            progress += speed
-            val pair = Pair(progress, speed)
-            queue[i] = pair
+    while (progressQueue.isNotEmpty()) {
+        var tempResult = 0
+        for (index in progressQueue.indices) {
+            progressQueue[index] += speedsQueue[index]
         }
-
-        for (i in nextIdx until queue.size) {
-            var progress = queue[i].first
-            if (progress >= 100) {
-                tempAnswer += 1
-                nextIdx += 1
+        while (progressQueue.isNotEmpty()) {
+            if (progressQueue.first() >= 100) {
+                progressQueue.removeFirst()
+                speedsQueue.removeFirst()
+                tempResult += 1
             } else {
                 break
             }
         }
-        if (tempAnswer != 0) {
-            result.add(tempAnswer)
-
+        if (tempResult != 0) {
+            answer.add(tempResult)
         }
     }
-    return result.toIntArray()
+    return answer.toIntArray()
 }
-/*
-progress : [93, 30, 55]
-speeds : [1, 30, 5]
-return : [2, 1]
-*/
