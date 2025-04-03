@@ -1,4 +1,4 @@
-package indie.leetcode.dailyquestion
+package indie.cotae.dailyquestion
 
 /**
  * 1. 가장 작은 수, 중복 시 가장 작은 인덱스의 수를 기준으로 탐색이 진행됩니다.
