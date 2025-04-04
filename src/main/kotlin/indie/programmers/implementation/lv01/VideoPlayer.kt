@@ -1,4 +1,4 @@
-package indie.programmers.implementation
+package indie.programmers.implementation.lv01
 
 fun main() {
     val videoLength = "07:22"

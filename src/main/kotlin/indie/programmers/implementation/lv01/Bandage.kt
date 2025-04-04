@@ -1,6 +1,4 @@
-package indie.programmers.implementation
-
-import kotlin.math.max
+package indie.programmers.implementation.lv01
 
 fun main() {
     val bandage = listOf(5, 1, 5)

@@ -1,4 +1,4 @@
-package indie.programmers.implementation
+package indie.programmers.implementation.lv01
 
 fun main() {
     val schedules = intArrayOf(700, 800, 1100)
