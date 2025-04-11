@@ -6,56 +6,57 @@ fun main() {
     println(solution(orders, course).joinToString())
 }
 
-// ["XYZ", "XWY", "WXA"]	[2,3,4]
-
 fun solution(orders: Array<String>, course: IntArray): Array<String> {
-    val result = mutableListOf<String>()
+    val answer = mutableListOf<String>()
 
-    // ABCFG에서 조합을 구해가지고
-    for(eachCourse in course) {
-        val tempMap = mutableMapOf<Int, List<String>>()
-        val menuMap = mutableMapOf<String, Int>()
-        // 새로운 메뉴 채움
-        for((index, order) in orders.withIndex()) {
-            var generateCourse = emptyList<String>()
-            if(order.length < eachCourse) continue // 만들 수 없는 코드라면 pass
-            generateCourse = generateCourse(order, eachCourse)
-            tempMap[index] = tempMap.getOrPut(index) { generateCourse }
+    for (num in course) { // 코스요리 메뉴 개수
+        val menuCombinations = mutableListOf<String>()
+
+        for (order in orders) { // 주문 현황
+            val sortedOrder = order.toCharArray().sorted().joinToString("")
+            menuCombinations.addAll(generateCourse(sortedOrder, num))
         }
-        println(tempMap)
+        println(menuCombinations)
 
-        for(values in tempMap.values) {
-            for(value in values) {
-                menuMap[value] = menuMap.getOrPut(value) { 0 } + 1
+        // 각 메뉴 조합의 등장 횟수 계산
+        val countMap = mutableMapOf<String, Int>()
+        for (menu in menuCombinations) {
+            countMap[menu] = countMap.getOrDefault(menu, 0) + 1
+        }
+        println(countMap)
+
+        // 최소 2번 이상 등장하고, 가장 많이 등장한 메뉴 조합 찾기
+        if (countMap.isNotEmpty()) {
+            val maxCount = countMap.values.maxOrNull() ?: 0
+            if (maxCount >= 2) {
+                for ((key, value) in countMap) {
+                    if (value == maxCount) {
+                        answer.add(key)
+                    }
+                }
             }
         }
-        println(menuMap)
-        val max = menuMap.values.maxOrNull() ?: 0
-        val filter = menuMap.filter { (key, value) ->
-            value == max
-        }.keys
-        result.addAll(filter)
     }
 
-    return result.sorted().toTypedArray()
+    return answer.sorted().toTypedArray()
 }
 
 fun generateCourse(str: String, length: Int): List<String> {
-    val charArray = str.toCharArray()
     val result = mutableListOf<String>()
 
-    fun combine(element: List<Char>, startIndex: Int, length: Int) {
-        if(element.size == length) {
-            result.add(element.joinToString(""))
+    fun combine(startIndex: Int, current: String) {
+        if (current.length == length) {
+            result.add(current)
             return
         }
 
-        for(index in startIndex until charArray.size) {
-            combine(element + listOf(charArray[index]), index +1, length)
+        // String, Char 덧셈 시 합쳐진 문자열 생성 type coercion
+        for (i in startIndex until str.length) {
+            combine(i + 1, current + str[i])
         }
     }
 
-    combine(emptyList(), 0, length)
+    combine(0, "")
     return result
 }
 
